@@ -1,13 +1,15 @@
 import React from 'react'
-
 import { Link } from 'gatsby'
+
+import D8 from './atom/Date'
 
 export default ({ title, date, path, excerpt }) => (
   <article>
     <h3>
       <Link to={path}>{title}</Link>
     </h3>
-    <p>{excerpt}</p>
-    <small>{date}</small>
+    <small>
+      <D8>{date}</D8>
+    </small>
   </article>
 )
