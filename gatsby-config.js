@@ -19,7 +19,11 @@ module.exports = {
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        plugins: [`gatsby-remark-autolink-headers`, `gatsby-remark-prismjs`],
+        plugins: [
+          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-katex`,
+          `gatsby-remark-prismjs`,
+        ],
       },
     },
     `gatsby-plugin-styled-components`,
