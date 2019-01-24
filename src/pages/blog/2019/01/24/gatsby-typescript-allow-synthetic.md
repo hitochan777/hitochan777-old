@@ -25,10 +25,10 @@ import React from 'react'
 なんで今更こんなエラーが出るようになったかというと、
 gatsby-plugins-typescript は型チェックなどはせずに js にトランスパイルするだけなので気づかなかっただけ。
 
-解決策は 2 つ。`tsconfig.json`追加すれば他のファイルの変更はいらないので今回は 2 にした。
+解決策は 2 つ。`tsconfig.json`を追加すれば他のファイルの変更はいらないので今回は 2 にした。
 ちなみに`gatsby-plugins-typescript`は`tsconfig.json`に全く影響されないっぽいので、設定は gatsby-config.js でやる必要がある。
 
-1. `import * as React from 'react'`
+1. `import * as React from 'react'`で全ての`export`を`React`として`import`
 2. `tsconfig.json`の`compileOptions`に以下のように`"esModuleInterop": true`を設定。
 
 ```json
