@@ -42,30 +42,28 @@
     })
   </script><style data-styled="dKIcWy" data-styled-version="4.1.3">
 /* sc-component-id: footer__Footer-sc-1o4kh6a-0 */
-.dKIcWy{width:100%;text-align:center;min-height:3rem;background-color:orange;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;position:absolute;bottom:0;}</style><link as="script" rel="preload" href="/webpack-runtime-e0643d56b3d6ad1db1f9.js"/><link as="script" rel="preload" href="/app-db566fa678e659f85f1f.js"/><link as="script" rel="preload" href="/0-e75be8a0d2ff7dbcafa8.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-32dd76bbb417af080a11.js"/><link as="fetch" rel="preload" href="/static/d/308/path---2019-01-15-gke-cluster-memo-78-c-026-KD3hREYxWd9dqltxvQ0Gc1w1zQ.json" crossOrigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div style="position:relative;min-height:100vh"><div style="background:orange;margin-bottom:1.45rem"><div style="margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0"><a style="color:black;text-decoration:none" href="/">Hitochan&#x27;s website</a></h1></div></div><div style="margin:0 auto;max-width:960px;padding:0px 1.0875rem 3rem"><h1>GKEでクラスタ作るときのメモ</h1><span>Jan 15</span> ・ <span>1</span> min read<div style="margin-top:3.0rem"><p>f1-micro インスタンスは 3 個以上でないと GKE クラスタが作れないが、<br>
-一度クラスタを作成してからインスタンスグループをスケーリングすることで一個でのクラスタに変更できる。(<a href="https://snyke.net/post/kubernetes-playground/">参考</a>)
-f1-micro はメモリが 0.6GB しかないので、自動でデプロイされるコンテナできちきちな状況。<br>
-ログのコンテナとか色々無効にすれば空きはでるものの (<a href="https://qiita.com/apstndb/items/1c3f8ea026ed6b27e357">参考</a>)、いろんなコンテナデプロイして試すにはやっぱりメモリがある程度欲しいよねってことで n1-standard-1 を使うことにした。<br>
-n1-standard-1 だとノードの数が 1 個でもクラスタは起動できるみたい。</p>
+.dKIcWy{width:100%;text-align:center;min-height:3rem;background-color:orange;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;position:absolute;bottom:0;}</style><link as="script" rel="preload" href="/webpack-runtime-e0643d56b3d6ad1db1f9.js"/><link as="script" rel="preload" href="/app-db566fa678e659f85f1f.js"/><link as="script" rel="preload" href="/0-e75be8a0d2ff7dbcafa8.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-32dd76bbb417af080a11.js"/><link as="fetch" rel="preload" href="/static/d/456/path---2019-01-24-gatsby-typescript-allow-synthetic-2-a-8-ee1-ckcNO3Wv1uB0fwop81khkE0U0pw.json" crossOrigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div style="position:relative;min-height:100vh"><div style="background:orange;margin-bottom:1.45rem"><div style="margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0"><a style="color:black;text-decoration:none" href="/">Hitochan&#x27;s website</a></h1></div></div><div style="margin:0 auto;max-width:960px;padding:0px 1.0875rem 3rem"><h1>typescriptのvim pluginとgatsby-plugins-typescriptを一緒に使う</h1><span>Jan 24</span> ・ <span>1</span> min read<div style="margin-top:3.0rem"><p><a href="https://www.gatsbyjs.org/packages/gatsby-plugin-typescript/">gatsby-plugins-typescript</a>で GatsbyJS を typescript で使えるようしていた。
+で今日、typescript だから VSCode を使うみたいな状況を避けたかったので、<a href="https://github.com/Quramy/tsuquyomi">tsuquyomi</a>という便利な Vim の typescript プラグインを入れてみた。</p>
+<p>すると、以下のようなエラーで怒られた。</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">src/templates/blog-post.tsx:1:8 - error TS1192: Module &#39;&quot;/home/hitochan/developer/me/node_modules/@types/react/index&quot;&#39; has no default export.
+
+1 import React from &#39;react&#39;</code></pre></div>
+<p>エラーが言っていることは文字通りで、react には default export がないのにそれを import しようとしてるよ！というエラーだ。</p>
+<p>具体的には以下のコード。</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">import React from &#39;react&#39;</code></pre></div>
+<p>なんで今更こんなエラーが出るようになったかというと、
+gatsby-plugins-typescript は型チェックなどはせずに js にトランスパイルするだけなのでこのような今まで気づかなかっただけ。</p>
+<p>解決策は 2 つ。<code class="language-text">tsconfig.json</code>追加すれば他のファイルの変更はいらないので今回は 2 にした。
+ちなみに<code class="language-text">gatsby-plugins-typescript</code>は<code class="language-text">tsconfig.json</code>に全く影響されないっぽいので、設定は gatsby-config.js でやる必要がある。</p>
 <ol>
-<li>
-<p>クラスタを作成</p>
-<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ gcloud container clusters create hitochan-cluster \
- --machine-type<span class="token operator">=</span>n1-standard-1 \
- --num-nodes<span class="token operator">=</span>1 \
- --disk-size<span class="token operator">=</span>10 \
- --no-enable-cloud-logging \
- --enable-autorepair \
- --preemptible</code></pre></div>
-</li>
-<li>
-<p>インスタンスグループの一覧を表示して名前をメモしておく。</p>
-<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ gcloud compute instance-groups managed list
-NAME                                            LOCATION       SCOPE  BASE_INSTANCE_NAME                          SIZE  TARGET_SIZE  INSTANCE_TEMPLATE                           AUTOSCALED
-gke-hitochan-cluster-default-pool-6618700a-grp  us-central1-a  zone   gke-hitochan-cluster-default-pool-6618700a  1     1            gke-hitochan-cluster-default-pool-6618700a  no</code></pre></div>
-</li>
-<li>
-<p>2 でメモしたインスタンスグループ名を指定して、インスタンス数を変更する。節約したいので使わないときは 0 にしておく。</p>
-<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ gcloud compute instance-groups managed resize gke-hitochan-cluster-default-pool-6618700a-grp --size<span class="token operator">=</span>0</code></pre></div>
-</li>
-</ol></div></div><footer class="footer__Footer-sc-1o4kh6a-0 dKIcWy"><div>© <!-- -->2019<!-- -->, Built by<!-- --> <a href="https://github.com/hitochan777">hitochan777</a> with love♡</div></footer></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-tsx","jsonName":"2019-01-15-gke-cluster-memo-78c","path":"/2019/01/15/gke-cluster-memo/"};window.dataPath="308/path---2019-01-15-gke-cluster-memo-78-c-026-KD3hREYxWd9dqltxvQ0Gc1w1zQ";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.56ca42d487b3148c4332.css","/app-db566fa678e659f85f1f.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx.b78da23dd1e6999d5837.css","/component---src-templates-blog-post-tsx-32dd76bbb417af080a11.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.b78da23dd1e6999d5837.css","/component---src-pages-index-tsx-1bbcf0b503a369acdddd.js"],"pages-manifest":["/pages-manifest-7915e61331ca26dfcb59.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-32dd76bbb417af080a11.js" async=""></script><script src="/0-e75be8a0d2ff7dbcafa8.js" async=""></script><script src="/app-db566fa678e659f85f1f.js" async=""></script><script src="/webpack-runtime-e0643d56b3d6ad1db1f9.js" async=""></script></body></html>
+<li><code class="language-text">import * as React from &#39;react&#39;</code></li>
+<li><code class="language-text">tsconfig.json</code>の<code class="language-text">compileOptions</code>に以下のように<code class="language-text">&quot;esModuleInterop&quot;: true</code>を設定。</li>
+</ol>
+<div class="gatsby-highlight" data-language="json"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    ...
+    <span class="token property">"esModuleInterop"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    ...
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  ...
+<span class="token punctuation">}</span></code></pre></div></div></div><footer class="footer__Footer-sc-1o4kh6a-0 dKIcWy"><div>© <!-- -->2019<!-- -->, Built by<!-- --> <a href="https://github.com/hitochan777">hitochan777</a> with love♡</div></footer></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-tsx","jsonName":"2019-01-24-gatsby-typescript-allow-synthetic-2a8","path":"/2019/01/24/gatsby-typescript-allow-synthetic/"};window.dataPath="456/path---2019-01-24-gatsby-typescript-allow-synthetic-2-a-8-ee1-ckcNO3Wv1uB0fwop81khkE0U0pw";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.56ca42d487b3148c4332.css","/app-db566fa678e659f85f1f.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx.b78da23dd1e6999d5837.css","/component---src-templates-blog-post-tsx-32dd76bbb417af080a11.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.b78da23dd1e6999d5837.css","/component---src-pages-index-tsx-1bbcf0b503a369acdddd.js"],"pages-manifest":["/pages-manifest-7915e61331ca26dfcb59.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-32dd76bbb417af080a11.js" async=""></script><script src="/0-e75be8a0d2ff7dbcafa8.js" async=""></script><script src="/app-db566fa678e659f85f1f.js" async=""></script><script src="/webpack-runtime-e0643d56b3d6ad1db1f9.js" async=""></script></body></html>
