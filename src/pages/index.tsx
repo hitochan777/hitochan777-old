@@ -1,7 +1,7 @@
 import React from 'react'
 import { graphql, Link } from 'gatsby'
 
-import Layout from '../components/layout.tsx'
+import Layout from '../components/layout'
 import ArticleListItem from '../components/ArticleListItem'
 
 export default ({ data }) => (

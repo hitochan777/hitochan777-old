@@ -1,7 +1,13 @@
 import React from 'react'
 
+type DateOption = {
+  year?: string
+  month: string
+  day: string
+}
+
 const formatDate = (d: Date): string => {
-  const options = { month: 'short', day: 'numeric' }
+  const options: DateOption = { month: 'short', day: 'numeric' }
   if (d.getFullYear() !== new Date().getFullYear()) {
     options.year = 'numeric'
   }

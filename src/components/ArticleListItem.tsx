@@ -3,7 +3,7 @@ import { Link } from 'gatsby'
 
 import D8 from './atom/Date'
 
-export default ({ title, date, path, excerpt }) => (
+export default ({ title, date, path }) => (
   <article>
     <h3>
       <Link to={path}>{title}</Link>

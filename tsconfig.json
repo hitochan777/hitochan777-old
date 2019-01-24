@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "esnext",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "lib": ["dom", "es2015", "es2017"]
+  },
+  "include": ["./src/**/*"]
+}
