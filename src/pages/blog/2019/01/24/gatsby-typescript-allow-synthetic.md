@@ -14,7 +14,7 @@ src/templates/blog-post.tsx:1:8 - error TS1192: Module '"/home/hitochan/develope
 1 import React from 'react'
 ```
 
-エラーが言っていることは文字通りで、react には default export がないのにそれを import しようとしてるよ！というエラーだ。
+エラーが言っていることは文字通りで、react には `default export` がないのにそれを `import` しようとしてるよ！というエラーだ。
 
 具体的には以下のコード。
 
@@ -23,7 +23,7 @@ import React from 'react'
 ```
 
 なんで今更こんなエラーが出るようになったかというと、
-gatsby-plugins-typescript は型チェックなどはせずに js にトランスパイルするだけなのでこのような今まで気づかなかっただけ。
+gatsby-plugins-typescript は型チェックなどはせずに js にトランスパイルするだけなので気づかなかっただけ。
 
 解決策は 2 つ。`tsconfig.json`追加すれば他のファイルの変更はいらないので今回は 2 にした。
 ちなみに`gatsby-plugins-typescript`は`tsconfig.json`に全く影響されないっぽいので、設定は gatsby-config.js でやる必要がある。
