@@ -42,28 +42,34 @@
     })
   </script><style data-styled="dKIcWy" data-styled-version="4.1.3">
 /* sc-component-id: footer__Footer-sc-1o4kh6a-0 */
-.dKIcWy{width:100%;text-align:center;min-height:3rem;background-color:orange;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;position:absolute;bottom:0;}</style><link as="script" rel="preload" href="/webpack-runtime-8f17c60c6bff893b9d04.js"/><link as="script" rel="preload" href="/app-320b9337c604854e10e8.js"/><link as="script" rel="preload" href="/0-bc8acb79827f926b597f.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"/><link as="fetch" rel="preload" href="/static/d/944/path---2019-01-24-gatsby-typescript-allow-synthetic-2-a-8-ee1-93YAVIcvxdffdKIwvHwz6CB08.json" crossOrigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div style="position:relative;min-height:100vh"><div style="background:orange;margin-bottom:1.45rem"><div style="margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0"><a style="color:black;text-decoration:none" href="/">Hitochan&#x27;s website</a></h1></div></div><div style="margin:0 auto;max-width:960px;padding:0px 1.0875rem 3rem"><h1>typescriptのvim pluginとgatsby-plugins-typescriptを一緒に使う</h1><span>Jan 24</span> ・ <span>1</span> min read<div style="margin-top:3.0rem"><p><a href="https://www.gatsbyjs.org/packages/gatsby-plugin-typescript/">gatsby-plugins-typescript</a>で GatsbyJS を typescript で使えるようしていた。
-で今日、typescript だから VSCode を使うみたいな状況を避けたかったので、<a href="https://github.com/Quramy/tsuquyomi">tsuquyomi</a>という便利な Vim の typescript プラグインを入れてみた。</p>
-<p>すると、以下のようなエラーで怒られた。</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">src/templates/blog-post.tsx:1:8 - error TS1192: Module &#39;&quot;/home/hitochan/developer/me/node_modules/@types/react/index&quot;&#39; has no default export.
-
-1 import React from &#39;react&#39;</code></pre></div>
-<p>エラーが言っていることは文字通りで、react には <code class="language-text">default export</code> がないのにそれを <code class="language-text">import</code> しようとしてるよ！というエラーだ。</p>
-<p>具体的には以下のコード。</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">import React from &#39;react&#39;</code></pre></div>
-<p>なんで今更こんなエラーが出るようになったかというと、
-gatsby-plugins-typescript は型チェックなどはせずに js にトランスパイルするだけなので気づかなかっただけ。</p>
-<p>解決策は 2 つ。<code class="language-text">tsconfig.json</code>を追加すれば他のファイルの変更はいらないので今回は 2 にした。
-ちなみに<code class="language-text">gatsby-plugins-typescript</code>は<code class="language-text">tsconfig.json</code>に全く影響されないっぽいので、設定は gatsby-config.js でやる必要がある。</p>
-<ol>
-<li><code class="language-text">import * as React from &#39;react&#39;</code>で全ての<code class="language-text">export</code>を<code class="language-text">React</code>として<code class="language-text">import</code></li>
-<li><code class="language-text">tsconfig.json</code>の<code class="language-text">compileOptions</code>に以下のように<code class="language-text">&quot;esModuleInterop&quot;: true</code>を設定。</li>
-</ol>
-<div class="gatsby-highlight" data-language="json"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    ...
-    <span class="token property">"esModuleInterop"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-    ...
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  ...
-<span class="token punctuation">}</span></code></pre></div></div></div><footer class="footer__Footer-sc-1o4kh6a-0 dKIcWy"><div>© <!-- -->2019<!-- -->, Built by<!-- --> <a href="https://github.com/hitochan777">hitochan777</a> with love♡</div></footer></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-tsx","jsonName":"2019-01-24-gatsby-typescript-allow-synthetic-2a8","path":"/2019/01/24/gatsby-typescript-allow-synthetic/"};window.dataPath="944/path---2019-01-24-gatsby-typescript-allow-synthetic-2-a-8-ee1-93YAVIcvxdffdKIwvHwz6CB08";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.56ca42d487b3148c4332.css","/app-320b9337c604854e10e8.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx.b78da23dd1e6999d5837.css","/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"],"component---src-pages-404-js":["/component---src-pages-404-js.b78da23dd1e6999d5837.css","/component---src-pages-404-js-857472636db8c57cc8d7.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.b78da23dd1e6999d5837.css","/component---src-pages-index-tsx-8554f3aa9b9ef2a3ea34.js"],"pages-manifest":["/pages-manifest-5e97ad91616aeadf1b69.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js" async=""></script><script src="/0-bc8acb79827f926b597f.js" async=""></script><script src="/app-320b9337c604854e10e8.js" async=""></script><script src="/webpack-runtime-8f17c60c6bff893b9d04.js" async=""></script></body></html>
+.dKIcWy{width:100%;text-align:center;min-height:3rem;background-color:orange;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;position:absolute;bottom:0;}</style><link as="script" rel="preload" href="/webpack-runtime-8f17c60c6bff893b9d04.js"/><link as="script" rel="preload" href="/app-320b9337c604854e10e8.js"/><link as="script" rel="preload" href="/0-bc8acb79827f926b597f.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"/><link as="fetch" rel="preload" href="/static/d/194/path---2019-01-25-output-book-0-cc-a0c-hi0PfSpHBKXuTfd8QrgDWoUTvI.json" crossOrigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div style="position:relative;min-height:100vh"><div style="background:orange;margin-bottom:1.45rem"><div style="margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0"><a style="color:black;text-decoration:none" href="/">Hitochan&#x27;s website</a></h1></div></div><div style="margin:0 auto;max-width:960px;padding:0px 1.0875rem 3rem"><h1>『アウトプット大全』を読んだ</h1><span>Jan 25</span> ・ <span>1</span> min read<div style="margin-top:3.0rem"><p>『学びを結果に変えるアウトプット大全』(樺沢紫苑著)を読んだ。
+本を月にどれだけ読んだとしても結局アウトプットしなければ意味がないと述べており、
+確かに今までに読んだ本の内容説明できるかと言われてもだいたい忘れているなと納得させられた。</p>
+<p>アウトプットの種類を「話す」、「書く」、「行動する」の 3 つに分けて説明されているのだが、
+図が散りばめられていたため理解しやすくスラスラ読むことができた。</p>
+<p>各項目で自分が印象に残った項目は以下。</p>
+<ul>
+<li>
+<p>話す</p>
+<ul>
+<li>人に物事を伝えるときは、No but 話法 ではなく、Yes で始まるクッション話法を使うことを心がける。<br>
+ネガティブなことから始めるのではなくポジティブなことを先に伝えると相手に与える印象が変わってくる。</li>
+</ul>
+</li>
+<li>
+<p>書く</p>
+<ul>
+<li>TODO アプリを使うと他のアプリに気が散ってしまうことがあるので、TODO リストは紙に書く</li>
+<li>構想を練るときは紙とペンで、アイデアがある程度出てきたらパソコンでまとめる。<br>
+スライドを作るときも一緒で最初からスライドを作ろうとしないこと。まずはアナログで言いたいことをまとめる。</li>
+<li>目標を実現するためには、頻繁に目標が目に入るようにすべき。 (確かに今年の抱負もなんだったかはっきり覚えてないなー)</li>
+</ul>
+</li>
+<li>
+<p>行動する</p>
+<ul>
+<li>やる気が出なくてもとりあえずやってみると、やる気スイッチが ON になる。</li>
+</ul>
+</li>
+</ul>
+<p>アプリ開発も今ちょっと滞ってるんだけどちゃんと紙で整理し直してみようと思う。</p></div></div><footer class="footer__Footer-sc-1o4kh6a-0 dKIcWy"><div>© <!-- -->2019<!-- -->, Built by<!-- --> <a href="https://github.com/hitochan777">hitochan777</a> with love♡</div></footer></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-tsx","jsonName":"2019-01-25-output-book-0cc","path":"/2019/01/25/output-book/"};window.dataPath="194/path---2019-01-25-output-book-0-cc-a0c-hi0PfSpHBKXuTfd8QrgDWoUTvI";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.56ca42d487b3148c4332.css","/app-320b9337c604854e10e8.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx.b78da23dd1e6999d5837.css","/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"],"component---src-pages-404-js":["/component---src-pages-404-js.b78da23dd1e6999d5837.css","/component---src-pages-404-js-857472636db8c57cc8d7.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.b78da23dd1e6999d5837.css","/component---src-pages-index-tsx-8554f3aa9b9ef2a3ea34.js"],"pages-manifest":["/pages-manifest-5e97ad91616aeadf1b69.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js" async=""></script><script src="/0-bc8acb79827f926b597f.js" async=""></script><script src="/app-320b9337c604854e10e8.js" async=""></script><script src="/webpack-runtime-8f17c60c6bff893b9d04.js" async=""></script></body></html>
