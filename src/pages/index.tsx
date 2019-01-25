@@ -19,7 +19,10 @@ export default ({ data }) => (
 
 export const query = graphql`
   {
-    allMarkdownRemark(limit: 10, sort: { fields: [fields___slug] }) {
+    allMarkdownRemark(
+      limit: 10
+      sort: { fields: [fields___slug], order: DESC }
+    ) {
       totalCount
       edges {
         node {
