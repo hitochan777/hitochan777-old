@@ -42,30 +42,41 @@
     })
   </script><style data-styled="dKIcWy" data-styled-version="4.1.3">
 /* sc-component-id: footer__Footer-sc-1o4kh6a-0 */
-.dKIcWy{width:100%;text-align:center;min-height:3rem;background-color:orange;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;position:absolute;bottom:0;}</style><link as="script" rel="preload" href="/webpack-runtime-df7fcecd8bbcc8746823.js"/><link as="script" rel="preload" href="/app-320b9337c604854e10e8.js"/><link as="script" rel="preload" href="/0-bc8acb79827f926b597f.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"/><link as="fetch" rel="preload" href="/static/d/308/path---2019-01-15-gke-cluster-memo-78-c-026-KD3hREYxWd9dqltxvQ0Gc1w1zQ.json" crossOrigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div style="position:relative;min-height:100vh"><div style="background:orange;margin-bottom:1.45rem"><div style="margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0"><a style="color:black;text-decoration:none" href="/">Hitochan&#x27;s website</a></h1></div></div><div style="margin:0 auto;max-width:960px;padding:0px 1.0875rem 3rem"><h1>GKEでクラスタ作るときのメモ</h1><span>Jan 15</span> ・ <span>1</span> min read<div style="margin-top:3.0rem"><p>f1-micro インスタンスは 3 個以上でないと GKE クラスタが作れないが、<br>
-一度クラスタを作成してからインスタンスグループをスケーリングすることで一個でのクラスタに変更できる。(<a href="https://snyke.net/post/kubernetes-playground/">参考</a>)
-f1-micro はメモリが 0.6GB しかないので、自動でデプロイされるコンテナできちきちな状況。<br>
-ログのコンテナとか色々無効にすれば空きはでるものの (<a href="https://qiita.com/apstndb/items/1c3f8ea026ed6b27e357">参考</a>)、いろんなコンテナデプロイして試すにはやっぱりメモリがある程度欲しいよねってことで n1-standard-1 を使うことにした。<br>
-n1-standard-1 だとノードの数が 1 個でもクラスタは起動できるみたい。</p>
-<ol>
-<li>
-<p>クラスタを作成</p>
-<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ gcloud container clusters create hitochan-cluster \
- --machine-type<span class="token operator">=</span>n1-standard-1 \
- --num-nodes<span class="token operator">=</span>1 \
- --disk-size<span class="token operator">=</span>10 \
- --no-enable-cloud-logging \
- --enable-autorepair \
- --preemptible</code></pre></div>
-</li>
-<li>
-<p>インスタンスグループの一覧を表示して名前をメモしておく。</p>
-<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ gcloud compute instance-groups managed list
-NAME                                            LOCATION       SCOPE  BASE_INSTANCE_NAME                          SIZE  TARGET_SIZE  INSTANCE_TEMPLATE                           AUTOSCALED
-gke-hitochan-cluster-default-pool-6618700a-grp  us-central1-a  zone   gke-hitochan-cluster-default-pool-6618700a  1     1            gke-hitochan-cluster-default-pool-6618700a  no</code></pre></div>
-</li>
-<li>
-<p>2 でメモしたインスタンスグループ名を指定して、インスタンス数を変更する。節約したいので使わないときは 0 にしておく。</p>
-<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">$ gcloud compute instance-groups managed resize gke-hitochan-cluster-default-pool-6618700a-grp --size<span class="token operator">=</span>0</code></pre></div>
-</li>
-</ol></div></div><footer class="footer__Footer-sc-1o4kh6a-0 dKIcWy"><div>© <!-- -->2019<!-- -->, Built by<!-- --> <a href="https://github.com/hitochan777">hitochan777</a> with love♡</div></footer></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-tsx","jsonName":"2019-01-15-gke-cluster-memo-78c","path":"/2019/01/15/gke-cluster-memo/"};window.dataPath="308/path---2019-01-15-gke-cluster-memo-78-c-026-KD3hREYxWd9dqltxvQ0Gc1w1zQ";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.56ca42d487b3148c4332.css","/app-320b9337c604854e10e8.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx.b78da23dd1e6999d5837.css","/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"],"component---src-pages-404-js":["/component---src-pages-404-js.b78da23dd1e6999d5837.css","/component---src-pages-404-js-857472636db8c57cc8d7.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.b78da23dd1e6999d5837.css","/component---src-pages-index-tsx-455aec420aecd2185b0a.js"],"pages-manifest":["/pages-manifest-73086d1f5d968d6a5aa4.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js" async=""></script><script src="/0-bc8acb79827f926b597f.js" async=""></script><script src="/app-320b9337c604854e10e8.js" async=""></script><script src="/webpack-runtime-df7fcecd8bbcc8746823.js" async=""></script></body></html>
+.dKIcWy{width:100%;text-align:center;min-height:3rem;background-color:orange;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;position:absolute;bottom:0;}</style><link as="script" rel="preload" href="/webpack-runtime-df7fcecd8bbcc8746823.js"/><link as="script" rel="preload" href="/app-320b9337c604854e10e8.js"/><link as="script" rel="preload" href="/0-bc8acb79827f926b597f.js"/><link as="script" rel="preload" href="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"/><link as="fetch" rel="preload" href="/static/d/3/path---2019-01-30-full-width-css-1-dc-fd5-FvxpbFKuk5MH2YDQ5hZqZMFXrPY.json" crossOrigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div style="position:relative;min-height:100vh"><div style="background:orange;margin-bottom:1.45rem"><div style="margin:0 auto;max-width:960px;padding:1.45rem 1.0875rem"><h1 style="margin:0"><a style="color:black;text-decoration:none" href="/">Hitochan&#x27;s website</a></h1></div></div><div style="margin:0 auto;max-width:960px;padding:0px 1.0875rem 3rem"><h1>親要素の幅に制限されず幅いっぱいに表示したい時</h1><span>Jan 30</span> ・ <span>1</span> min read<div style="margin-top:3.0rem"><p>例えば下のコードで<code class="language-text">.full-width</code>がついた<code class="language-text">div</code>要素を viewport の幅いっぱいに表示したいとする。
+<code class="language-text">.full-width</code>の<code class="language-text">width</code>を 100%に指定しているので、<code class="language-text">.parent</code>の幅までしか広がらない。
+仮に<code class="language-text">100vw</code>にしたとしても<code class="language-text">.parent</code>の要素が viewport の左端から始まっていないと幅いっぱいに表示されるようにはならない。</p>
+<div class="gatsby-highlight" data-language="html"><pre class="language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>parent<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>paragraph before images<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>full-width<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span><span class="token punctuation">></span></span>paragraph after images<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre></div>
+<div class="gatsby-highlight" data-language="css"><pre class="language-css"><code class="language-css"><span class="token selector">.parent</span> <span class="token punctuation">{</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.full-width</span> <span class="token punctuation">{</span>
+  <span class="token property">height</span><span class="token punctuation">:</span> 100px<span class="token punctuation">;</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
+  <span class="token property">background-color</span><span class="token punctuation">:</span> green<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div>
+<h1 id="解決方法"><a href="#%E8%A7%A3%E6%B1%BA%E6%96%B9%E6%B3%95" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>解決方法</h1>
+<p>解決方法は <code class="language-text">calc</code> を使い方法など<a href="https://css-tricks.com/full-width-containers-limited-width-parents/">色々ある</a>のですが、<code class="language-text">calc</code> も使わないシンプルな方法がある。
+それが以下のコード。</p>
+<div class="gatsby-highlight" data-language="css"><pre class="language-css"><code class="language-css"><span class="token selector">.parent</span> <span class="token punctuation">{</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 100px
+  <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">.full-width</span> <span class="token punctuation">{</span>
+  <span class="token property">width</span><span class="token punctuation">:</span> 100vw<span class="token punctuation">;</span>
+  <span class="token property">position</span><span class="token punctuation">:</span> relative<span class="token punctuation">;</span>
+  <span class="token property">left</span><span class="token punctuation">:</span> 50%<span class="token punctuation">;</span>
+  <span class="token property">margin-left</span><span class="token punctuation">:</span> -50vw<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></div>
+<p>ポイントは次のとおり。</p>
+<ul>
+<li>子要素で<code class="language-text">position</code>を<code class="language-text">relative</code>にするために親要素も<code class="language-text">relative</code>に設定</li>
+<li>viewport の幅いっぱいに表示したいので<code class="language-text">width</code>は<code class="language-text">100vw</code>に設定</li>
+<li><code class="language-text">.full-width</code>の<code class="language-text">div</code>要素がもともと配置される予定だった位置から相対的に右に 50%ずらす。そうすると viewport のちょうど真ん中から div 要素が表示されるようになる。</li>
+<li>あとは<code class="language-text">margin-left: -50vw</code>で viewport の幅半分分左にずらせば幅いっぱいに表示できる。</li>
+</ul></div></div><footer class="footer__Footer-sc-1o4kh6a-0 dKIcWy"><div>© <!-- -->2019<!-- -->, Built by<!-- --> <a href="https://github.com/hitochan777">hitochan777</a> with love♡</div></footer></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---src-templates-blog-post-tsx","jsonName":"2019-01-30-full-width-css-1dc","path":"/2019/01/30/full-width-css/"};window.dataPath="3/path---2019-01-30-full-width-css-1-dc-fd5-FvxpbFKuk5MH2YDQ5hZqZMFXrPY";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.56ca42d487b3148c4332.css","/app-320b9337c604854e10e8.js"],"component---src-templates-blog-post-tsx":["/component---src-templates-blog-post-tsx.b78da23dd1e6999d5837.css","/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js"],"component---src-pages-404-js":["/component---src-pages-404-js.b78da23dd1e6999d5837.css","/component---src-pages-404-js-857472636db8c57cc8d7.js"],"component---src-pages-index-tsx":["/component---src-pages-index-tsx.b78da23dd1e6999d5837.css","/component---src-pages-index-tsx-455aec420aecd2185b0a.js"],"pages-manifest":["/pages-manifest-73086d1f5d968d6a5aa4.js"]};/*]]>*/</script><script src="/component---src-templates-blog-post-tsx-96dcb2e8180692609663.js" async=""></script><script src="/0-bc8acb79827f926b597f.js" async=""></script><script src="/app-320b9337c604854e10e8.js" async=""></script><script src="/webpack-runtime-df7fcecd8bbcc8746823.js" async=""></script></body></html>
