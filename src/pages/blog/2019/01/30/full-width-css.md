@@ -55,9 +55,12 @@ parent {
 - `.full-width`の`div`要素がもともと配置される予定だった位置から相対的に右に 50%ずらす。そうすると viewport のちょうど真ん中から div 要素が表示されるようになる。
 - あとは`margin-left: -50vw`で viewport の幅半分分左にずらせば幅いっぱいに表示できる。
 
-<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="hitochan777" data-slug-hash="JxbZEE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="JxbZEE">
+<p class="codepen" data-height="300" data-theme-id="0" data-default-tab="html,result" data-user="hitochan777" data-slug-hash="JxbZEE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="JxbZEE">
   <span>See the Pen <a href="https://codepen.io/hitochan777/pen/JxbZEE/">
   JxbZEE</a> by Hitoshi Otsuki (<a href="https://codepen.io/hitochan777">@hitochan777</a>)
   on <a href="https://codepen.io">CodePen</a>.</span>
 </p>
 <script async src="https://static.codepen.io/assets/embed/ei.js"></script>
+
+注意しないといけないのは縦スクロールバーがある場合は、`100vw`はそれも含んだ値になるので、
+結果的に横スクロールバーが表示されてしまう。`overflow-x: hidden`で横スクロールバーを消すしか無いのかな...
