@@ -1,0 +1,54 @@
+---
+title: 親要素の幅に制限されず幅いっぱいに表示したい時
+date: 2019-01-30
+---
+
+例えば下のコードで`.full-width`がついた`div`要素を viewport の幅いっぱいに表示したいとする。
+`.full-width`の`width`を 100%に指定しているので、`.parent`の幅までしか広がらない。
+仮に`100vw`にしたとしても`.parent`の要素が viewport の左端から始まっていないと幅いっぱいに表示されるようにはならない。
+
+```html
+<div class="parent">
+  <p>paragraph before images</p>
+  <div class="full-width"></div>
+  <p>paragraph after images</p>
+</div>
+```
+
+```css
+.parent {
+  width: 50%;
+}
+
+.full-width {
+  height: 100px;
+  width: 100%;
+  background-color: green;
+}
+```
+
+# 解決方法
+
+解決方法は `calc` を使い方法など[色々ある](https://css-tricks.com/full-width-containers-limited-width-parents/)のですが、`calc` も使わないシンプルな方法がある。
+それが以下のコード。
+
+```css
+.parent {
+  width: 100px
+  position: relative;
+}
+
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+}
+```
+
+ポイントは次のとおり。
+
+- 子要素で`position`を`relative`にするために親要素も`relative`に設定
+- viewport の幅いっぱいに表示したいので`width`は`100vw`に設定
+- `.full-width`の`div`要素がもともと配置される予定だった位置から相対的に右に 50%ずらす。そうすると viewport のちょうど真ん中から div 要素が表示されるようになる。
+- あとは`margin-left: -50vw`で viewport の幅半分分左にずらせば幅いっぱいに表示できる。
