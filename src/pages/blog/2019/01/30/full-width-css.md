@@ -33,7 +33,7 @@ date: 2019-01-30
 それが以下のコード。
 
 ```css
-.parent {
+parent {
   width: 100px
   position: relative;
 }
@@ -43,6 +43,8 @@ date: 2019-01-30
   position: relative;
   left: 50%;
   margin-left: -50vw;
+  height: 100px;
+  background-color: green;
 }
 ```
 
@@ -52,3 +54,10 @@ date: 2019-01-30
 - viewport の幅いっぱいに表示したいので`width`は`100vw`に設定
 - `.full-width`の`div`要素がもともと配置される予定だった位置から相対的に右に 50%ずらす。そうすると viewport のちょうど真ん中から div 要素が表示されるようになる。
 - あとは`margin-left: -50vw`で viewport の幅半分分左にずらせば幅いっぱいに表示できる。
+
+<p class="codepen" data-height="265" data-theme-id="0" data-default-tab="html,result" data-user="hitochan777" data-slug-hash="JxbZEE" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid black; margin: 1em 0; padding: 1em;" data-pen-title="JxbZEE">
+  <span>See the Pen <a href="https://codepen.io/hitochan777/pen/JxbZEE/">
+  JxbZEE</a> by Hitoshi Otsuki (<a href="https://codepen.io/hitochan777">@hitochan777</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://static.codepen.io/assets/embed/ei.js"></script>
