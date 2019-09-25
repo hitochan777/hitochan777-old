@@ -80,5 +80,11 @@ Then I ran Next.js server and yes, it finally worked!
 # But isn't it a bit redundant...?
 
 You probably noticed the redundancy here and are thinking, "you don't need the babel plugin anymore, do you?".  
-However, I tried removing the plugin then it didn't compile.  
-But why?
+Looking at GitHub issues, I found that this matter is currently under discussion ([Link](https://github.com/zeit/next-plugins/issues/136)).
+I tried the possible solutions but they did not lead to removing this redundancy.  
+Ideally, it would be nice if we can just specify `compileOptions.paths` because VSCode take `tsconfig.json` into account and thus it does not complain it cannot find modules.  
+Even if we can do with only `.babelrc`, VSCode might not be able resolve modules.
+
+# Conclusion
+
+In conclusion, it **seems** that you need to configure both `tsconfig.json` and `.babelrc` for path aliases to work in Next.js + Typescript!
