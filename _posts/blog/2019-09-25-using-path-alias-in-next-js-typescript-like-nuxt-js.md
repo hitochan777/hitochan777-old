@@ -43,3 +43,42 @@ You just need to download this package and add the following setting (or whateve
 ```
 
 I was happy until I started using typescript in Next.js now that it officially added Typescript support from 9.x!
+
+# Path Alias in Next.js with Typescript
+
+With above setting only, Next.js with Typescript will complain that it cannot find aliased modules!
+
+```console
+17:31 Cannot find module '@/store'.
+    15 | import { MultiSelect } from "./molecule/MultiSelect";
+    16 | import Loading from "./Loading";
+  > 17 | import { useStateValue } from "@/store";
+       |                               ^
+    18 | import { GET_LANGUAGES, GetLanguagesQuery } from "@/constant/queries";
+    19 |
+    20 | interface Props {
+```
+
+Then I realized that Typescript itself provides aliases by `compileOptions.paths` field in `tsconfig.json`.  
+So I defined a module mapping using wildcard in `paths`, along with `baseUrl` set to the same directory as where `tsconfig.json` is located. (This is because each mapping in `paths` is relative to `baseUrl` so it also needs to be set).
+
+```json
+{
+  "compilerOptions": {
+    ...
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["*"]
+    }
+    ...
+  }
+}
+```
+
+Then I ran Next.js server and yes, it finally worked!
+
+# But isn't it a bit redundant...?
+
+You probably noticed the redundancy here and are thinking, "you don't need the babel plugin anymore, do you?".  
+However, I tried removing the plugin then it didn't compile.  
+But why?
