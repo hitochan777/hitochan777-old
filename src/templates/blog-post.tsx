@@ -1,10 +1,11 @@
 import React from 'react'
 import { graphql } from 'gatsby'
+import { remarkForm } from 'gatsby-tinacms-remark'
 
 import Layout from '../components/layout'
 import D8 from '../components/atom/Date'
 
-export default ({ data }) => {
+function BlogPostTemplate({ data }) {
   const post = data.markdownRemark
   return (
     <Layout>
@@ -19,15 +20,21 @@ export default ({ data }) => {
   )
 }
 
+export default remarkForm(BlogPostTemplate)
+
 export const query = graphql`
   query($slug: String!) {
     markdownRemark(fields: { slug: { eq: $slug } }) {
+      id
       html
       frontmatter {
         title
         date
       }
       timeToRead
+      fileRelativePath
+      rawFrontmatter
+      rawMarkdownBody
     }
   }
 `
