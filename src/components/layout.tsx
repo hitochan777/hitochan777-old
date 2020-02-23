@@ -1,9 +1,28 @@
 import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
+import { withPlugin } from 'tinacms'
+import { RemarkCreatorPlugin } from 'gatsby-tinacms-remark'
 
 import Header from './header'
 import Footer from './footer'
 import './layout.css'
+
+const CreateBlogPlugin = new RemarkCreatorPlugin({
+  label: 'New Blog Post',
+  filename: form => {
+    return form.filename
+  },
+  fields: [
+    {
+      name: 'filename',
+      component: 'text',
+      label: 'Filename',
+      placeholder: 'content/blog/hello-world/index.md',
+      description:
+        'The full path to the new markdown file, relative to the repository root.',
+    },
+  ],
+})
 
 const Layout = ({ children }) => (
   <StaticQuery
@@ -34,4 +53,4 @@ const Layout = ({ children }) => (
   />
 )
 
-export default Layout
+export default withPlugin(Layout, CreateBlogPlugin)
