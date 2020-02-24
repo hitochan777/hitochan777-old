@@ -20,7 +20,8 @@ export default ({ data }) => (
 export const query = graphql`
   {
     allMarkdownRemark(
-      limit: 10
+      filter: { published: { eq: true } }
+      limit: 1000
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       totalCount

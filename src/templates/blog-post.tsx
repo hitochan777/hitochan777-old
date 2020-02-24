@@ -7,6 +7,7 @@ import { Button as TinaButton } from '@tinacms/styles'
 
 import Layout from '../components/layout'
 import D8 from '../components/atom/Date'
+import typography from '../utils/typography'
 
 const BlogPostForm = {
   fields: [
@@ -47,8 +48,16 @@ function BlogPostTemplate({ data, isEditing, setIsEditing }) {
         </TinaButton>
       )}
       <h1>{post.frontmatter.title}</h1>
-      <D8>{post.frontmatter.date}</D8> ・ <span>{post.timeToRead}</span> min
-      read
+      <p
+        style={{
+          ...typography.scale(-1 / 5),
+          display: `block`,
+          marginBottom: typography.rhythm(1),
+        }}
+      >
+        {post.frontmatter.draft ? 'Draft' : <D8>{post.frontmatter.date}</D8>} ・{' '}
+        <span>{post.timeToRead}</span> min read
+      </p>
       <TinaField name="rawMarkdownBody" Component={Wysiwyg}>
         <section
           style={{ marginTop: '3.0rem' }}
@@ -63,12 +72,13 @@ export default liveRemarkForm(BlogPostTemplate, BlogPostForm)
 
 export const query = graphql`
   query($slug: String!) {
-    markdownRemark(fields: { slug: { eq: $slug } }) {
+    markdownRemark(published: { eq: true }, fields: { slug: { eq: $slug } }) {
       id
       html
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        draft
       }
       timeToRead
       fileRelativePath
