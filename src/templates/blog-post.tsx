@@ -1,6 +1,6 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import { liveRemarkForm } from 'gatsby-tinacms-remark'
+import { liveRemarkForm, DeleteAction } from 'gatsby-tinacms-remark'
 import { Wysiwyg } from '@tinacms/fields'
 import { TinaField } from 'tinacms'
 import { Button as TinaButton } from '@tinacms/styles'
@@ -10,6 +10,7 @@ import D8 from '../components/atom/Date'
 import typography from '../utils/typography'
 
 const BlogPostForm = {
+  actions: [DeleteAction],
   fields: [
     {
       label: 'Title',
