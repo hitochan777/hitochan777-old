@@ -17,6 +17,17 @@ const BlogPostForm = {
       component: 'text',
     },
     {
+      label: 'Date',
+      name: 'frontmatter.date',
+      component: 'date',
+      timeFormat: true,
+    },
+    {
+      name: 'frontmatter.draft',
+      component: 'toggle',
+      label: 'Draft',
+    },
+    {
       label: 'Body',
       name: 'rawMarkdownBody',
       description: 'Enter the post body',

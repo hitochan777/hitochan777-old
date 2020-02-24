@@ -10,18 +10,40 @@ import './layout.css'
 const CreateBlogPlugin = new RemarkCreatorPlugin({
   label: 'New Blog Post',
   filename: form => {
-    return form.filename
+    const slug = form.title.replace(/\s+/g, '-').toLowerCase()
+    form.date = form.date ?? new Date()
+    const year = `${form.date.getFullYear()}`
+    const month = `${form.date.getMonth() + 1}`.padStart(2, '0')
+    const day = `${form.date.getDate()}`.padStart(2, '0')
+    const dateStr = `${year}-${month}-${day}`
+    return `_posts/blog/${dateStr}-${form.title}.md`
   },
   fields: [
     {
-      name: 'filename',
+      name: 'title',
       component: 'text',
-      label: 'Filename',
-      placeholder: 'content/blog/hello-world/index.md',
-      description:
-        'The full path to the new markdown file, relative to the repository root.',
+      label: 'title',
+      placeholder: 'title here',
+    },
+    {
+      name: 'date',
+      component: 'date',
+      label: 'Date',
+      placeholder: '',
+      timeFormat: true,
+    },
+    {
+      name: 'draft',
+      component: 'toggle',
+      label: 'Draft',
     },
   ],
+  frontmatter: postInfo => ({
+    layout: 'blog',
+    title: postInfo.title,
+    date: postInfo.date ?? new Date(),
+    draft: postInfo.draft ?? false,
+  }),
 })
 
 const Layout = ({ children }) => (
