@@ -2,7 +2,7 @@
 title: GraphQL nexus says interface object lacks resolve function
 layout: blog
 date: '2019-11-22T12:28:36.695Z'
-draft: true
+draft: false
 ---
 # Error description
 I have an interface type called `Node` which contains ID field. 
