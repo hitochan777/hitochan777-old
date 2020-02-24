@@ -57,7 +57,6 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
   result.data.allMarkdownRemark.edges.forEach(({ node }) => {
-    console.log(node.published)
     if (!node.published) {
       return
     }
