@@ -2,6 +2,7 @@ import React from 'react'
 import { StaticQuery, graphql } from 'gatsby'
 import { withPlugin } from 'tinacms'
 import { RemarkCreatorPlugin } from 'gatsby-tinacms-remark'
+import slugify from 'slugify'
 
 import Header from './header'
 import Footer from './footer'
@@ -16,7 +17,8 @@ const CreateBlogPlugin = new RemarkCreatorPlugin({
     const month = `${form.date.getMonth() + 1}`.padStart(2, '0')
     const day = `${form.date.getDate()}`.padStart(2, '0')
     const dateStr = `${year}-${month}-${day}`
-    return `_posts/blog/${dateStr}-${form.title}.md`
+    const slugified = slugify(`${dateStr}-${form.title}`, { lower: true })
+    return `_posts/blog/${slugified}.md`
   },
   fields: [
     {

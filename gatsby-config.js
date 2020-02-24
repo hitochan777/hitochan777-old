@@ -44,7 +44,7 @@ module.exports = {
       options: {
         sidebar: {
           hidden: process.env.NODE_ENV === 'production',
-          // position: 'displace',
+          position: 'overlay',
         },
         plugins: [
           'gatsby-tinacms-git',

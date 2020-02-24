@@ -27,6 +27,7 @@ export const query = graphql`
       totalCount
       edges {
         node {
+          id
           rawMarkdownBody
           fields {
             slug
