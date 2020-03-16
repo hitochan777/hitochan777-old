@@ -52,7 +52,6 @@ module.exports = {
           {
             resolve: 'gatsby-tinacms-git',
             options: {
-              gitRemote: 'https://github.com/hitochan777/hitochan777.git',
               sshKey: process.env.SSH_KEY,
             },
           },
