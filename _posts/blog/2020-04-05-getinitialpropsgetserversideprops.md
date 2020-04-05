@@ -15,22 +15,24 @@ Next.jsでpagesで用いるデータ取得を行う際はgetInitialPropsを用�
 
 9\.3より前はgetInitialPropsをpage用のfunctionのプロパティとして代入してあげる形で表現していました。
 
-    import { NextPage } from "next";
+```tsx
+import { NextPage } from "next";
         
-    const UserIndexPage: NextPage<Props> = ({ username }) => {
-        ...
-    };
+const UserIndexPage: NextPage<Props> = ({ username }) => {
+    ...
+};
         
-    UserIndexPage.getInitialProps = async (ctx) => {
-        return {name: "foo"}
-    };
+UserIndexPage.getInitialProps = async (ctx) => {
+    return {name: "foo"}
+};
+```
 
 # getServerSidePropsに移行した場合
 
 9\.3以降はgetServerSidePropsという関数を直接exportしてあげることでサーバサイドでのデータ取得が可能です。getServerSidePropsの型はGetServerSidePropsを用います。([参考](https://nextjs.org/docs/basic-features/data-fetching#typescript-use-getserversideprops))   
 注意点としては返り値が以前はpropの名前と対応する値からなるオブジェクトでしたが、それを`props`でラッピングしてあげる必要があります。
 
-```javascript
+```tsx
 import { NextPage, GetServerSideProps } from "next";
     
 const UserIndexPage: NextPage<Props> = ({ username }) => {
