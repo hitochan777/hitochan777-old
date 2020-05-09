@@ -6,7 +6,6 @@ import {
   inlineRemarkForm,
   useRemarkForm,
 } from 'gatsby-tinacms-remark'
-import ReactMarkdown from 'react-markdown'
 import {
   useInlineForm,
   InlineForm,
