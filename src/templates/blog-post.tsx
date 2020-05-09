@@ -1,8 +1,18 @@
 import React from 'react'
 import { graphql } from 'gatsby'
-import { liveRemarkForm, DeleteAction } from 'gatsby-tinacms-remark'
-import { Wysiwyg } from '@tinacms/fields'
-import { TinaField } from 'tinacms'
+import { usePlugin } from 'tinacms'
+import {
+  DeleteAction,
+  inlineRemarkForm,
+  useRemarkForm,
+} from 'gatsby-tinacms-remark'
+import ReactMarkdown from 'react-markdown'
+import {
+  useInlineForm,
+  InlineForm,
+  InlineWysiwyg,
+  InlineTextField,
+} from 'react-tinacms-inline'
 import { Button as TinaButton } from '@tinacms/styles'
 
 import Layout from '../components/layout'
@@ -38,38 +48,87 @@ const BlogPostForm = {
   ],
 }
 
-function BlogPostTemplate({ data, isEditing, setIsEditing }) {
-  const post = data.markdownRemark
+export function EditToggle() {
+  // Access 'edit mode' controls via `useInlineForm` hook
+  const { status, deactivate, activate } = useInlineForm()
+
+  return (
+    <TinaButton
+      primary
+      onClick={() => {
+        status === 'active' ? deactivate() : activate()
+      }}
+    >
+      {status === 'active' ? 'Preview' : 'Edit'}
+    </TinaButton>
+  )
+}
+
+export function DiscardButton() {
+  const { form } = useInlineForm()
+
+  if (form.finalForm.getState().pristine) {
+    return null
+  }
+
+  return (
+    <TinaButton
+      color="primary"
+      onClick={() => {
+        form.finalForm.reset()
+      }}
+    >
+      Discard Changes
+    </TinaButton>
+  )
+}
+
+function BlogPostTemplate({ data }) {
+  const [markdownRemark, form] = useRemarkForm(
+    data.markdownRemark,
+    BlogPostForm
+  )
+  usePlugin(form)
 
   return (
     <Layout>
-      {process.env.NODE_ENV != 'production' && (
-        <TinaButton primary onClick={() => setIsEditing(p => !p)}>
-          {isEditing ? 'Preview' : 'Edit'}
-        </TinaButton>
-      )}
-      <h1>{post.frontmatter.title}</h1>
-      <p
-        style={{
-          ...typography.scale(-1 / 5),
-          display: `block`,
-          marginBottom: typography.rhythm(1),
-        }}
-      >
-        {post.frontmatter.draft ? 'Draft' : <D8>{post.frontmatter.date}</D8>} ・{' '}
-        <span>{post.timeToRead}</span> min read
-      </p>
-      <TinaField name="rawMarkdownBody" Component={Wysiwyg}>
-        <section
-          style={{ marginTop: '3.0rem' }}
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
-      </TinaField>
+      <InlineForm form={form}>
+        {process.env.NODE_ENV != 'production' && (
+          <>
+            <EditToggle />
+            <DiscardButton />
+          </>
+        )}
+        <h1>
+          <InlineTextField name="rawFrontmatter.title" />
+        </h1>
+        <p
+          style={{
+            ...typography.scale(-1 / 5),
+            display: `block`,
+            marginBottom: typography.rhythm(1),
+          }}
+        >
+          {markdownRemark.frontmatter.draft ? (
+            'Draft'
+          ) : (
+            <D8>{markdownRemark.frontmatter.date}</D8>
+          )}{' '}
+          ・ <span>{data.markdownRemark.timeToRead}</span> min read
+        </p>
+        <InlineWysiwyg name="rawMarkdownBody" format="markdown">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: markdownRemark.html,
+            }}
+          />
+        </InlineWysiwyg>
+      </InlineForm>
     </Layout>
   )
 }
 
-export default liveRemarkForm(BlogPostTemplate, BlogPostForm)
+export default inlineRemarkForm(BlogPostTemplate)
 
 export const query = graphql`
   query($slug: String!) {

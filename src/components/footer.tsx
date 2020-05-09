@@ -5,7 +5,7 @@ const Footer = styled.footer`
   width: 100%;
   text-align: center;
   min-height: 3rem;
-  background-color: orange;
+  background-color: #e5e9f0;
   display: flex;
   flex-direction: column;
   justify-content: center;

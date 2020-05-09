@@ -2,4 +2,25 @@ html,
 body {
   min-height: 100vh;
   margin: 0;
+  color: rgb(76, 86, 106);
+}
+
+a:link {
+  text-decoration: none;
+  color: rgb(76, 86, 106);
+}
+
+a:visited {
+  text-decoration: none;
+  color: rgb(76, 86, 106);
+}
+
+a:hover {
+  text-decoration: underline;
+  color: rgb(76, 86, 106);
+}
+
+a:active {
+  text-decoration: underline;
+  color: rgb(76, 86, 106);
 }
