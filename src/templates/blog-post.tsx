@@ -9,9 +9,9 @@ import {
 import {
   useInlineForm,
   InlineForm,
-  InlineWysiwyg,
   InlineTextField,
 } from 'react-tinacms-inline'
+import { InlineWysiwyg } from 'react-tinacms-editor'
 import { Button as TinaButton } from '@tinacms/styles'
 
 import Layout from '../components/layout'
