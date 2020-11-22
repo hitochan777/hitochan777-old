@@ -4,8 +4,8 @@
 
 Older version might work but did not check
 
-- Node >= 10.x
-- npm >= 6.x
+- Node >= 15.x
+- npm >= 7.x
 
 # Install
 
